@@ -19,7 +19,7 @@ set(
         includes/systems/null_renderer.hpp
         includes/systems/text_renderer/text_renderer.hpp
         includes/systems/text_renderer/text_screen.hpp
-        includes/systems/text_renderer/displays/console_text_display.hpp
+        includes/systems/text_renderer/displays/console_display.hpp
         libs/thread-pool/thread_pool.hpp
 )
 
@@ -32,7 +32,7 @@ set(
         src/components/mover.cpp
         src/components/camera.cpp
         src/systems/text_renderer/text_renderer.cpp
-        src/systems/text_renderer/displays/console_text_display.cpp
+        src/systems/text_renderer/displays/console_display.cpp
 )
 
 add_subdirectory(libs/glm)
