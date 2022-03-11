@@ -2,7 +2,7 @@
 #include "includes/components/mover.hpp"
 #include "includes/engine.hpp"
 #include "includes/systems/text_renderer/text_renderer.hpp"
-#include "includes/systems/text_renderer/screens/console_text_screen.hpp"
+#include "includes/systems/text_renderer/displays//console_text_display.hpp"
 
 int main()
 {
@@ -15,7 +15,7 @@ int main()
     auto transform = npc->emplace_component<Transform>(glm::vec2(1, 2));
     npc->emplace_component<Mover>(glm::vec2(10, 10));
 
-    textRenderer->emplace_screen<ConsoleTextScreen>(camera);
+    textRenderer->emplace_display<ConsoleTextDisplay>(camera);
 
     Engine::get()->run();
 }

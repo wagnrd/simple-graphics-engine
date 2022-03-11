@@ -3,11 +3,11 @@
 
 #include <vector>
 
-class TextScreen {
+class TextDisplay {
 public:
     virtual void draw(std::vector<char> renderedImage) = 0;
 
-    virtual ~TextScreen() = default;
+    virtual ~TextDisplay() = default;
 };
 
 #endif //SIMPLE_GRAPHICS_ENGINE_TEXT_SCREEN_HPP

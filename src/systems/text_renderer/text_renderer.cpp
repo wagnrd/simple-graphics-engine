@@ -3,13 +3,13 @@
 
 void TextRenderer::process()
 {
-    for (const auto&[camera, screens]: mCameras)
+    for (const auto&[camera, displays]: mCameras)
     {
         auto rootNode = camera->renderable_node_tree();
         auto renderedImage = render(rootNode);
 
-        for (const auto& screen: screens)
-            screen->draw(renderedImage);
+        for (const auto& display: displays)
+            display->draw(renderedImage);
     }
 }
 
