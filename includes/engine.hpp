@@ -5,8 +5,9 @@
 #include <utility>
 #include <chrono>
 #include <unordered_map>
-#include "system.hpp"
-#include "includes/utils/thread-pool/thread_pool.hpp"
+
+#include "libs/thread-pool/thread_pool.hpp"
+#include "includes/system.hpp"
 
 class Node;
 
@@ -17,7 +18,7 @@ class Engine {
     thread_pool threadPool;
     steadyClock::time_point mLastFrameTime{};
     std::shared_ptr<Node> mScene{};
-    std::unordered_map<const char*, System*> mSystems;
+    std::unordered_map<const char*, std::shared_ptr<System>> mSystems;
 
 public:
     static Engine* get();
@@ -27,15 +28,15 @@ public:
     [[noreturn]] void run();
 
     template<class T, typename... Args>
-    T* enable_system(Args... args)
+    std::shared_ptr<T> enable_system(Args... args)
     {
         auto typeName = typeid(T).name();
         auto it = mSystems.find(typeName);
 
         if (it != mSystems.end())
-            return dynamic_cast<T*>(it->second);
+            return std::dynamic_pointer_cast<T>(it->second);
 
-        auto system = new T(args...);
+        auto system = std::make_shared<T>(args...);
         mSystems.insert({typeName, system});
 
         return system;
@@ -50,7 +51,6 @@ public:
         if (it == mSystems.end())
             return;
 
-        delete it->second;
         mSystems.erase(it);
     }
 

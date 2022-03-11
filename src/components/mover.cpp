@@ -2,17 +2,17 @@
 #include "includes/components/transform.hpp"
 #include "includes/components/mover.hpp"
 
-Mover::Mover(const Position& maxPosition) : maxPosition(maxPosition)
+Mover::Mover(const glm::vec2& maxPosition) : maxPosition(maxPosition)
 {}
 
 void Mover::start()
 {
     transform = node().lock()->get_component<Transform>();
-    basePosition = transform->position;
 }
 
 void Mover::update(float deltaTime)
 {
+    auto basePosition = transform->position;
     auto x = transform->position.x;
     auto y = transform->position.y;
 

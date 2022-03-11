@@ -54,6 +54,11 @@ void Node::remove_child(size_t index)
     mChildren.erase(mChildren.begin() + index);
 }
 
+void Node::remove_all_children()
+{
+    mChildren.clear();
+}
+
 std::shared_ptr<Node> Node::find_child(const std::string& childName) const
 {
     for (const auto& child: mChildren)

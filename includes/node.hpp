@@ -30,6 +30,7 @@ public:
     void add_child(const std::shared_ptr<Node>& node);
     void remove_child(const std::string& childName);
     void remove_child(size_t index);
+    void remove_all_children();
     std::shared_ptr<Node> find_child(const std::string& childName) const;
     std::shared_ptr<Node> find_child(size_t index) const;
 

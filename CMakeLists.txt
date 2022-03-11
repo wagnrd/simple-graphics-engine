@@ -17,11 +17,10 @@ set(
         includes/components/mover.hpp
         includes/components/camera.hpp
         includes/systems/null_renderer.hpp
-        includes/systems/text_renderer/text_screen.cpp
-        includes/systems/text_renderer/text_screen.hpp
         includes/systems/text_renderer/text_renderer.hpp
-        includes/models/position.hpp
-        includes/utils/thread-pool/thread_pool.hpp
+        includes/systems/text_renderer/text_screen.hpp
+        includes/systems/text_renderer/screens/console_text_screen.hpp
+        libs/thread-pool/thread_pool.hpp
 )
 
 set(
@@ -33,7 +32,10 @@ set(
         src/components/mover.cpp
         src/components/camera.cpp
         src/systems/text_renderer/text_renderer.cpp
+        src/systems/text_renderer/screens/console_text_screen.cpp
 )
+
+add_subdirectory(libs/glm)
 
 find_package(Threads REQUIRED)
 
@@ -48,4 +50,5 @@ target_link_libraries(
         simple_graphics_engine PRIVATE
 
         Threads::Threads
+        glm
 )

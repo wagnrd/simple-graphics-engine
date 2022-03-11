@@ -1,17 +1,19 @@
 #ifndef SIMPLE_GRAPHICS_ENGINE_TRANSFORM_HPP
 #define SIMPLE_GRAPHICS_ENGINE_TRANSFORM_HPP
 
+#include <utility>
+#include <glm/vec2.hpp>
+
 #include "includes/component.hpp"
-#include "includes/models/position.hpp"
 
 class Transform: public Component {
 public:
-    Position position{};
+    glm::vec2 position;
 
 public:
     Transform() = default;
 
-    explicit Transform(Position position) : position(position)
+    explicit Transform(const glm::vec2& position) : position(position)
     {}
 };
 

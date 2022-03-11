@@ -47,6 +47,7 @@ void Engine::process_node_updates()
 
 void Engine::process_node_post_updates()
 {
+    threadPool.wait_for_tasks();
     mScene->post_update();
 }
 
