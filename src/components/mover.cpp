@@ -7,7 +7,9 @@ Mover::Mover(const glm::vec2& maxPosition) : maxPosition(maxPosition)
 
 void Mover::start()
 {
-    transform = node().lock()->get_component<Transform>();
+    transform = node().lock()
+                      ->find_component<Transform>()
+                      .value();
 }
 
 void Mover::update(float deltaTime)

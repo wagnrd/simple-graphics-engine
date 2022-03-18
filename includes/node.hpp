@@ -24,15 +24,13 @@ public:
     {}
 
     void update(float deltaTime);
-    void post_update();
 
-    std::shared_ptr<Node> emplace_child(const std::string& childName = "");
     void add_child(const std::shared_ptr<Node>& node);
     void remove_child(const std::string& childName);
     void remove_child(size_t index);
     void remove_all_children();
-    std::shared_ptr<Node> find_child(const std::string& childName) const;
-    std::shared_ptr<Node> find_child(size_t index) const;
+    std::optional<std::shared_ptr<Node>> find_child(const std::string& childName) const;
+    std::optional<std::shared_ptr<Node>> find_child(size_t index) const;
 
     template<class T, typename... Args>
     std::shared_ptr<T> emplace_component(Args... args)
@@ -53,13 +51,13 @@ public:
     }
 
     template<class T>
-    std::shared_ptr<T> get_component() const
+    std::optional<std::shared_ptr<T>> find_component() const
     {
         auto typeName = typeid(T).name();
         auto it = mComponents.find(typeName);
 
         if (it == mComponents.end())
-            throw std::runtime_error("Component '" + std::string(typeName) + "' not found in node '" + mName + "'");
+            return {};
 
         return std::dynamic_pointer_cast<T>(it->second);
     }

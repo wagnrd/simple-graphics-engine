@@ -8,12 +8,17 @@
 
 class Transform: public Component {
 public:
-    glm::vec2 position;
+    glm::vec2 position{};
+    float rotation{};
+    glm::vec2 scale{1, 1};
 
 public:
     Transform() = default;
 
-    explicit Transform(const glm::vec2& position) : position(position)
+    Transform(const glm::vec2& position, float rotation, const glm::vec2& scale)
+            : position(position),
+              rotation(rotation),
+              scale(scale)
     {}
 };
 

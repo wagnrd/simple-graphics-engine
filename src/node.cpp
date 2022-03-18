@@ -9,23 +9,6 @@ void Node::update(float deltaTime)
         child->update(deltaTime);
 }
 
-void Node::post_update()
-{
-    for (auto&[_, component]: mComponents)
-        component->post_update();
-
-    for (auto& child: mChildren)
-        child->post_update();
-}
-
-std::shared_ptr<Node> Node::emplace_child(const std::string& childName)
-{
-    auto node = std::make_shared<Node>(childName);
-    add_child(node);
-
-    return node;
-}
-
 void Node::add_child(const std::shared_ptr<Node>& node)
 {
     mChildren.push_back(node);
@@ -59,7 +42,7 @@ void Node::remove_all_children()
     mChildren.clear();
 }
 
-std::shared_ptr<Node> Node::find_child(const std::string& childName) const
+std::optional<std::shared_ptr<Node>> Node::find_child(const std::string& childName) const
 {
     for (const auto& child: mChildren)
     {
@@ -67,13 +50,13 @@ std::shared_ptr<Node> Node::find_child(const std::string& childName) const
             return child;
     }
 
-    throw std::runtime_error("No child found with name '" + childName + " in node '" + mName + "'");
+    return {};
 }
 
-std::shared_ptr<Node> Node::find_child(size_t index) const
+std::optional<std::shared_ptr<Node>> Node::find_child(size_t index) const
 {
     if (index >= mChildren.size())
-        throw std::runtime_error("No child found at index '" + std::to_string(index) + " in node '" + mName + "'");
+        return {};
 
     return mChildren.at(index);
 }

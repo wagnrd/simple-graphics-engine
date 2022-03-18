@@ -16,10 +16,15 @@ set(
         includes/components/transform.hpp
         includes/components/mover.hpp
         includes/components/camera.hpp
-        includes/systems/null_renderer.hpp
-        includes/systems/text_renderer/text_renderer.hpp
-        includes/systems/text_renderer/text_screen.hpp
-        includes/systems/text_renderer/displays/console_display.hpp
+        includes/components/renderer/renderer.hpp
+        includes/components/renderer/renderable.hpp
+        includes/systems/renderers/null_renderer.hpp
+        includes/systems/renderers/text_renderer/text_renderer.hpp
+        includes/systems/renderers/text_renderer/text_display.hpp
+        includes/systems/renderers/text_renderer/displays/console_display.hpp
+        includes/systems/renderers/text_renderer/text_render_fragment.hpp
+        includes/systems/renderers/render_fragment.hpp
+        includes/components/renderer/renderables/line.hpp
         libs/thread-pool/thread_pool.hpp
 )
 
@@ -31,8 +36,10 @@ set(
         src/node.cpp
         src/components/mover.cpp
         src/components/camera.cpp
-        src/systems/text_renderer/text_renderer.cpp
-        src/systems/text_renderer/displays/console_display.cpp
+        src/components/renderer/renderer.cpp
+        src/components/renderer/renderables/line.cpp
+        src/systems/renderers/text_renderer/text_renderer.cpp
+        src/systems/renderers/text_renderer/displays/console_display.cpp
 )
 
 add_subdirectory(libs/glm)

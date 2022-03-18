@@ -14,19 +14,15 @@ class Component {
 public:
     virtual ~Component() = default;
 
-    std::weak_ptr<Node> node()
+    [[nodiscard]] std::weak_ptr<Node> node()
     {
         return mNode;
     }
 
-protected:
     virtual void start()
     {}
 
     virtual void update(float deltaTime)
-    {}
-
-    virtual void post_update()
     {}
 };
 

@@ -15,20 +15,22 @@ class Engine {
 
     using steadyClock = std::chrono::steady_clock;
 
-    thread_pool threadPool;
+    bool shouldRun{true};
+    thread_pool mThreadPool{};
     steadyClock::time_point mLastFrameTime{};
+    std::unordered_map<const char*, std::shared_ptr<System>> mSystems{};
+
     std::shared_ptr<Node> mScene{};
-    std::unordered_map<const char*, std::shared_ptr<System>> mSystems;
+    size_t mFpsLimit;
 
 public:
     static Engine* get();
 
-    std::shared_ptr<Node> emplace_scene();
-    void set_scene(std::shared_ptr<Node> scene);
-    [[noreturn]] void run();
+    void run();
+    void exit();
 
     template<class T, typename... Args>
-    std::shared_ptr<T> enable_system(Args... args)
+    std::shared_ptr<T> emplace_system(Args... args)
     {
         auto typeName = typeid(T).name();
         auto it = mSystems.find(typeName);
@@ -43,7 +45,7 @@ public:
     }
 
     template<class T>
-    void disable_system()
+    void remove_system()
     {
         auto typeName = typeid(T).name();
         auto it = mSystems.find(typeName);
@@ -55,24 +57,30 @@ public:
     }
 
     template<class T>
-    [[nodiscard]] T* get_system()
+    [[nodiscard]] std::optional<std::shared_ptr<T>> find_system() const
     {
         auto typeName = typeid(T).name();
         auto it = mSystems.find(typeName);
 
         if (it == mSystems.end())
-            throw std::runtime_error("System '" + std::string(typeName) + "' not found");
+            return {};
 
         return it->second;
     }
 
-    // Getters
-    [[nodiscard]] std::shared_ptr<Node> scene();
+    // Getters and Setters
+    [[nodiscard]] std::shared_ptr<Node> scene() const;
+    void set_scene(const std::shared_ptr<Node>& scene);
+    [[nodiscard]] size_t fps_limit() const;
+    void set_fps_limit(size_t fpsLimit);
 
 private:
-    void process_node_updates();
+    void process_node_updates(float deltaTime);
     void process_systems();
-    void process_node_post_updates();
+    void control_frame_rate(steadyClock::time_point startFrameTime) const;
+    float calculate_frame_delta_time(steadyClock::time_point startFrameTime);
+
+    std::shared_ptr<Node> copy_node(const std::shared_ptr<Node>& node);
 };
 
 #endif //SIMPLE_GRAPHICS_ENGINE_ENGINE_HPP
