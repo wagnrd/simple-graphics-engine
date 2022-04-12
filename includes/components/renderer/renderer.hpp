@@ -11,7 +11,7 @@ class Renderer: public Component {
     std::shared_ptr<Renderable> mRenderable{};
 
 public:
-    Renderer(const std::shared_ptr<Renderable>& mRenderable);
+    explicit Renderer(const std::shared_ptr<Renderable>& mRenderable);
 
     void start() override;
     [[nodiscard]] std::unique_ptr<RenderFragment> render(glm::vec2 aspectRatio) const;

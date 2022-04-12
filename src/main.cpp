@@ -10,9 +10,11 @@
 int main()
 {
     auto npc = std::make_shared<Node>("npc");
-    auto transform = npc->emplace_component<Transform>();
-    transform->position = glm::vec2{1, 2};
-    transform->scale = glm::vec2{1, 2};
+    auto transform = npc->emplace_component<Transform>(
+            glm::vec2{1, 2},
+            45,
+            glm::vec2{1, 2}
+    );
     //npc->emplace_component<Mover>(glm::vec2(10, 10));
     npc->emplace_component<Renderer>(
             std::make_shared<Line>(glm::vec4(255, 255, 255, 1))
